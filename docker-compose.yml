@@ -6,6 +6,17 @@ services:
       dockerfile: ./docker/jupyter/Dockerfile
     volumes:
       - ./work:/home/jovyan/work
+      - ./cache:/home/jovyan/.cache
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/jovyan/work/third-summer-462105-g9-2268ff868f1f.json
+      - GRANT_SUDO=yes
     ports:
       - 8888:8888
     command: "start-notebook.sh --NotebookApp.token="
+    #nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+      
